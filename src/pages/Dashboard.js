@@ -67,7 +67,7 @@ const Dashboard = () => {
   };
   const copyToClipboard = () => {
     navigator.clipboard.writeText(
-      `https://wa.me/1XXXXXXXXXX?code=${referralLink}`
+      `https://wa.me/+919104755319?text=I%27want%20to%20get%20my%20work%20done%20sale%20referredby%20${referralLink}`
     );
     toast("Copied", { type: "success" });
   };
@@ -203,7 +203,7 @@ const Dashboard = () => {
           <div className="referral-link">
             <input
               type="text"
-              value={`https://wa.me/1XXXXXXXXXX?code=${referralLink}`}
+              value={`https://wa.me/+919104755319?text=I%27want%20to%20get%20my%20work%20done%20sale%20referredby%20${referralLink}`}
               readOnly
             />
             <button onClick={copyToClipboard}>
