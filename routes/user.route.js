@@ -186,6 +186,10 @@ router.post("/getUserByReferral", adminAuth, async (req, res) => {
     const { referralCode } = req.body;
     const user = await User.findOne({ referralCode });
 
+    if (!user) {
+      res.status(500).send("Invalid Referral Code");
+    }
+
     res.send({ user: user });
   } catch (error) {
     res.status(500).send(error);
