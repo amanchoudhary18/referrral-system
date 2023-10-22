@@ -33,6 +33,14 @@ function WithdrawalModel({ show, onHide, getData }) {
         toast("Successful withdrawal", { type: "success" });
         onHide();
         getData();
+
+        setWithdrawData({
+          referralCode: "",
+          name: "",
+          totalEarnings: "",
+          amountToWithdraw: "",
+        });
+        setUserFetched(false);
       }
     } catch (error) {
       console.log(error);
@@ -65,9 +73,12 @@ function WithdrawalModel({ show, onHide, getData }) {
         });
 
         setUserFetched(true); // Set the state to indicate that user data has been fetched
+      } else {
+        toast(`Referral Code should be of 9 characters`, { type: "error" });
       }
     } catch (error) {
       console.log(error);
+      toast(`${error.response.data}`, { type: "error" });
     }
   };
 
@@ -143,6 +154,7 @@ function WithdrawalModel({ show, onHide, getData }) {
               type="button"
               onClick={handleFormSubmit}
               className="my-2"
+              disabled={withdrawData.amountToWithdraw === 0}
             >
               Approve
             </Button>
