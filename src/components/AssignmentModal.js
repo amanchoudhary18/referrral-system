@@ -45,14 +45,31 @@ function AssignmentModal({
 
   const handleFormSubmit = async () => {
     try {
-      const check = await checkReferralCode(assignmentData.referralCode);
+      // Trim extra spaces from all fields
+      const trimmedAssignmentData = {
+        clientName: assignmentData.clientName.trim(),
+        fileName: assignmentData.fileName.trim(),
+        referralCode: assignmentData.referralCode.trim(),
+        deadline: assignmentData.deadline,
+        amount: assignmentData.amount.trim(),
+      };
+
+      // Check if any field is empty
+      for (const field in trimmedAssignmentData) {
+        if (trimmedAssignmentData[field] === "") {
+          throw new Error("Please fill in all fields.");
+        }
+      }
+
+      const check = await checkReferralCode(trimmedAssignmentData.referralCode);
       if (!check.exists) {
         throw new Error("Referral Code invalid");
       }
+
       if (isEditing) {
         const response = await axios.put(
           `/api/v1/assignment/assignments/${selectedAssignment._id}`,
-          { ...assignmentData },
+          { ...trimmedAssignmentData },
           config
         );
 
@@ -70,7 +87,7 @@ function AssignmentModal({
       } else {
         const response = await axios.post(
           "/api/v1/assignment/assignments",
-          assignmentData,
+          trimmedAssignmentData,
           config
         );
 
@@ -86,7 +103,7 @@ function AssignmentModal({
         getData();
       }
     } catch (error) {
-      console.error("Error adding assignment:", error);
+      console.error("Error adding/editing assignment:", error);
       toast(`${error.message}`, { type: "error" });
     }
   };
