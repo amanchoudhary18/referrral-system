@@ -35,7 +35,7 @@ const AssignmentTable = ({
   };
 
   return (
-    <Table striped bordered hover>
+    <Table striped responsive>
       <thead>
         <tr>
           <th>Client Name</th>
@@ -64,7 +64,11 @@ const AssignmentTable = ({
             {isAdmin && (
               <td>
                 <div
-                  style={{ display: "flex", flexDirection: "row", gap: "16px" }}
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "16px",
+                  }}
                 >
                   <div onClick={() => onEdit(assignment)}>
                     <FontAwesomeIcon

@@ -9,6 +9,8 @@ import AssignmentModal from "../components/AssignmentModal";
 import AssignmentTable from "../components/AssignmentTable";
 import WithdrawalModel from "../components/WithdrawalModel";
 import { useNavigate } from "react-router-dom";
+import "./Dashboard.css";
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState();
@@ -149,20 +151,15 @@ const Dashboard = () => {
 
   return (
     <div className="mx-5 mt-3">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
+      <div className="desktop">
         <h3>Dashboard</h3>
         {isAdmin ? (
           <div style={{ display: "flex", flexDirection: "row", gap: "16px" }}>
-            <Button variant="primary" onClick={openModal}>
+            <Button className="btn" variant="primary" onClick={openModal}>
               + Add Assignment
             </Button>
             <Button
+              className="btn"
               style={{ backgroundColor: "green" }}
               onClick={openWithdrawal}
             >
@@ -180,6 +177,63 @@ const Dashboard = () => {
           <div style={{ display: "flex", flexDirection: "row", gap: "16px" }}>
             <h5 className="my-2">Rs. {withdrawalAmount}</h5>
             <Button
+              className="btn"
+              variant="primary"
+              onClick={handleWithdrawal}
+              disabled={withdrawalAmount === 0}
+            >
+              Withdraw Amount
+            </Button>
+
+            <div
+              className="my-2"
+              onClick={handleLogout}
+              style={{ cursor: "pointer" }}
+            >
+              <FontAwesomeIcon icon={faPowerOff} color="red" />
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="resp">
+        <h3>Dashboard</h3>
+        {isAdmin ? (
+          <div style={{ display: "flex", flexDirection: "row", gap: "16px" }}>
+            <Button className="desktop" variant="primary" onClick={openModal}>
+              + Add Assignment
+            </Button>
+
+            <Button className="resp" variant="primary" onClick={openModal}>
+              + Add
+            </Button>
+            <Button
+              className="desktop"
+              style={{ backgroundColor: "green" }}
+              onClick={openWithdrawal}
+            >
+              ✓ Approve Withdrawal
+            </Button>
+            <Button
+              className="resp"
+              style={{ backgroundColor: "green" }}
+              onClick={openWithdrawal}
+            >
+              ✓ Approve
+            </Button>
+            <div
+              className="my-2"
+              onClick={handleLogout}
+              style={{ cursor: "pointer" }}
+            >
+              <FontAwesomeIcon icon={faPowerOff} color="red" />
+            </div>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "row", gap: "16px" }}>
+            <h5 className="my-2">Rs. {withdrawalAmount}</h5>
+            <Button
+              className="btn"
               variant="primary"
               onClick={handleWithdrawal}
               disabled={withdrawalAmount === 0}
@@ -206,7 +260,7 @@ const Dashboard = () => {
               value={`https://wa.me/+919104755319?text=I%27want%20to%20get%20my%20work%20done%20sale%20referredby%20${referralLink}`}
               readOnly
             />
-            <button onClick={copyToClipboard}>
+            <button className="btn" onClick={copyToClipboard}>
               <img src={copy} alt="copy" />
             </button>
           </div>
