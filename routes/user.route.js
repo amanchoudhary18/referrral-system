@@ -19,21 +19,28 @@ function generateNumericReferralCode() {
 // Route to register a new user
 router.post("/register", async (req, res) => {
   try {
-    const { email, password, name } = req.body;
+    const { email, password, name, phone_number } = req.body;
 
     const referralCode = generateNumericReferralCode();
+    const oldUser = await User.findOne({ email: email.toLowerCase() });
 
-    const user = new User({
-      email,
-      password,
-      name,
-      referralCode,
-    });
+    if (oldUser) {
+      res.status(500).send({ error: "User Already Exists" });
+    } else {
+      const user = new User({
+        email: email.toLowerCase(),
+        password,
+        name,
+        referralCode,
+        phone_number,
+      });
 
-    await user.save();
+      await user.save();
 
-    const token = await user.generateAuthToken();
-    res.status(201).send({ user, token });
+      const token = await user.generateAuthToken();
+
+      res.status(201).send({ user, token });
+    }
   } catch (error) {
     res.status(400).send(error);
   }

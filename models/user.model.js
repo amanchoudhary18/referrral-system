@@ -19,7 +19,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-
+    phone_number: {
+      type: Number,
+      required: true,
+    },
     referralCode: {
       type: String,
       required: true,
