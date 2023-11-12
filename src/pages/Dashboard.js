@@ -88,8 +88,7 @@ const Dashboard = () => {
       config
     );
 
-    if (user.data.user.admin)
-      setAssignments(assignments.data.filter((e) => e.completed === false));
+    if (user.data.user.admin) setAssignments(assignments.data);
     else {
       assignments.data.forEach((e) =>
         console.log(e.referralCode, referralLink)
@@ -288,13 +287,37 @@ const Dashboard = () => {
       )}
 
       <div className="my-5">
-        <AssignmentTable
-          assignments={assignments}
-          isAdmin={isAdmin}
-          onEdit={onEdit}
-          onDelete={handleDelete}
-          getData={getData}
-        />
+        {assignments.filter((e) => e.completed === false).length > 0 && (
+          <>
+            {" "}
+            <h3>Pending</h3>
+            <AssignmentTable
+              assignments={assignments.filter((e) => e.completed === false)}
+              isAdmin={isAdmin}
+              onEdit={onEdit}
+              onDelete={handleDelete}
+              getData={getData}
+              completed={false}
+            />
+          </>
+        )}
+      </div>
+
+      <div className="my-5">
+        {assignments.filter((e) => e.completed === true).length > 0 && (
+          <>
+            {" "}
+            <h3>Completed</h3>
+            <AssignmentTable
+              assignments={assignments.filter((e) => e.completed === true)}
+              isAdmin={isAdmin}
+              onEdit={onEdit}
+              onDelete={handleDelete}
+              getData={getData}
+              completed={true}
+            />
+          </>
+        )}
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -31,7 +32,7 @@ function Login() {
         toast("Successfully Logged In", { type: "success" });
         navigate("/dashboard");
       } else {
-        const formData = { name, email, password };
+        const formData = { name, email, password, phone_number: phone };
         const res = await axios.post("/api/v1/user/register", formData);
         toast("Successfully Registered", { type: "success" });
         localStorage.setItem("token", res.data.token);
@@ -70,6 +71,18 @@ function Login() {
                   placeholder="Enter Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                />
+              </Form.Group>
+            )}
+
+            {activeTab === "Register" && (
+              <Form.Group controlId="formBasicNumber" className="mb-3">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter Phone Number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               </Form.Group>
             )}

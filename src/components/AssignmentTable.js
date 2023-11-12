@@ -12,6 +12,7 @@ const AssignmentTable = ({
   onDelete,
   isAdmin,
   getData,
+  completed,
 }) => {
   const handleComplete = async (assignment) => {
     try {
@@ -43,7 +44,7 @@ const AssignmentTable = ({
           <th>Referral Code</th>
           <th>Deadline</th>
           <th>Amount</th>
-          {isAdmin && <th>Actions</th>}
+          {isAdmin && !completed && <th>Actions</th>}
         </tr>
       </thead>
       <tbody>
@@ -61,7 +62,7 @@ const AssignmentTable = ({
               })}
             </td>
             <td>{isAdmin ? assignment.amount : assignment.amount * 0.1}</td>
-            {isAdmin && (
+            {isAdmin && !completed && (
               <td>
                 <div
                   style={{
